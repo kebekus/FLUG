@@ -42,8 +42,11 @@ lemma untop_add {a b : WithTop ℤ} (ha : a ≠ ⊤) (hb : b ≠ ⊤) :
 -- Unclear to me. Is this easy?
 lemma untop'_add {a b : WithTop ℤ} (ha : a ≠ ⊤) (hb : b ≠ ⊤) :
     (a + b).untop' 0 = a.untop' 0 + b.untop' 0 := by
-  sorry
-
+  -- Proof by Commelin
+  rw [WithTop.ne_top_iff_exists] at ha hb
+  obtain ⟨a, rfl⟩ := ha
+  obtain ⟨b, rfl⟩ := hb
+  norm_cast
 
 -- ## Example 3
 
@@ -62,10 +65,9 @@ lemma untop_of_ne_top_eq_coe {a : WithTop ℤ} (ha : a ≠ ⊤) :
 -- Complicated. Isn't there an easier proof?
 lemma untop'_of_ne_top_eq_coe {a : WithTop ℤ} {d : ℤ} (ha : a ≠ ⊤) :
     WithTop.untop' d a = a := by
-  obtain ⟨b, hb⟩ := WithTop.ne_top_iff_exists.1 ha
-  rw [← hb]
+  -- Simplified proof by Commelin
+  obtain ⟨b, rfl⟩ := WithTop.ne_top_iff_exists.1 ha
   simp
-
 
 -- ## Example 4
 
