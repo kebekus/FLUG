@@ -9,13 +9,8 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 lemma WithTopCoe
   {n : WithTop ℕ} :
   WithTop.map (Nat.cast : ℕ → ℤ) n = 0 → n = 0 := by
-  rcases n with h|h
-  · intro h
-    contradiction
-  · intro h₁
-    simp only [WithTop.map, Option.map] at h₁
-    rw [Int.ofNat_eq_zero.mp (WithTop.coe_eq_zero.mp h₁)]
-    rfl
+  cases n
+  <;> simp
 
 
 -- ## Example 2
@@ -72,9 +67,11 @@ lemma untop'_of_ne_top_eq_coe {a : WithTop ℤ} {d : ℤ} (ha : a ≠ ⊤) :
 -- ## Example 4
 
 -- Unclear to me. Is there an easy proof?
-lemma untop'_and_untop {a : ENat} (ha : a ≠ ⊤) :
+lemma untop'_and_untop {a : WithTop ℕ} (ha : a ≠ ⊤) :
     a.untop ha = a.untop' 0 := by
-  sorry
+  obtain ⟨b, rfl⟩ := WithTop.ne_top_iff_exists.1 ha
+  simp
+
 
 
 -- ## Example 5
@@ -88,4 +85,9 @@ lemma add_mul_enat {a : ℕ} {b : ENat} :
 -- Unclear to me. Is there an easy proof?
 lemma add_mul_withTop {a : ℕ} {b : WithTop ℤ} :
     a * b + b = (a + 1) * b := by
-  sorry
+  cases b
+  · simp
+    exact rfl
+  · norm_cast
+    simp
+    ring

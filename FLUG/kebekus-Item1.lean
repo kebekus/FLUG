@@ -5,10 +5,8 @@ import Mathlib.Data.ENNReal.Basic
 
 noncomputable def primitive
   {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E] :
-  ℂ  → (ℂ → E) → (ℂ → E) := by
-  intro z₀
-  intro f
-  exact fun z ↦ (∫ (x : ℝ) in z₀.re..z.re, f ⟨x, z₀.im⟩) + Complex.I • ∫ (x : ℝ) in z₀.im..z.im, f ⟨z.re, x⟩
+  ℂ  → (ℂ → E) → (ℂ → E) :=
+  fun z₀ f ↦ fun z ↦ (∫ (x : ℝ) in z₀.re..z.re, f ⟨x, z₀.im⟩) + Complex.I • ∫ (x : ℝ) in z₀.im..z.im, f ⟨z.re, x⟩
 
 
 theorem primitive_zeroAtBasepoint
